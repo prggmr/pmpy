@@ -1,0 +1,225 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Welcome to pmpy! &mdash; pmpy - Python Project Manager 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="pmpy - Python Project Manager 1.0 documentation" href="#" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="nav-item nav-item-0"><a href="#">pmpy - Python Project Manager 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="welcome-to-pmpy">
+<h1>Welcome to pmpy!<a class="headerlink" href="#welcome-to-pmpy" title="Permalink to this headline">¶</a></h1>
+<p>pmpy (Project Manager Python) is a simple CLI tool for managing projects.</p>
+<div class="section" id="available-commands">
+<h2>Available commands<a class="headerlink" href="#available-commands" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="build-docs">
+<h3>build_docs<a class="headerlink" href="#build-docs" title="Permalink to this headline">¶</a></h3>
+<p>Compiles the command documentation.</p>
+<div class="highlight-bash"><div class="highlight"><pre>usage: pmpy build_docs <span class="o">[</span>-h<span class="o">]</span> output
+
+positional arguments:
+  output      Output destination
+
+optional arguments:
+  -h, --help  show this <span class="nb">help </span>message and <span class="nb">exit</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="create-config">
+<h3>create_config<a class="headerlink" href="#create-config" title="Permalink to this headline">¶</a></h3>
+<p>Creates a new configuration.</p>
+<div class="highlight-bash"><div class="highlight"><pre>usage: pmpy create_config <span class="o">[</span>-h<span class="o">]</span> project
+
+positional arguments:
+  project     Project to create the config <span class="k">for</span>.
+
+optional arguments:
+  -h, --help  show this <span class="nb">help </span>message and <span class="nb">exit</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="create-env">
+<h3>create_env<a class="headerlink" href="#create-env" title="Permalink to this headline">¶</a></h3>
+<p>Loads a project environment.</p>
+<div class="highlight-bash"><div class="highlight"><pre>usage: pmpy create_env <span class="o">[</span>-h<span class="o">]</span> project
+
+positional arguments:
+  project     Name of the project
+
+optional arguments:
+  -h, --help  show this <span class="nb">help </span>message and <span class="nb">exit</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="create-project">
+<h3>create_project<a class="headerlink" href="#create-project" title="Permalink to this headline">¶</a></h3>
+<p>Creates a new project at the given destination x in the projects directory.</p>
+<div class="highlight-bash"><div class="highlight"><pre>usage: pmpy create_project <span class="o">[</span>-h<span class="o">]</span> <span class="o">[</span>-d<span class="o">]</span> <span class="o">[</span>-f<span class="o">]</span> <span class="o">[</span>-r REPO<span class="o">]</span> <span class="o">[</span>-o<span class="o">]</span> <span class="o">[</span>--no-env<span class="o">]</span>
+                           <span class="o">[</span>--clone CLONE<span class="o">]</span>
+                           project
+
+positional arguments:
+  project               Name of the project
+
+optional arguments:
+  -h, --help            show this <span class="nb">help </span>message and <span class="nb">exit</span>
+  -d, --delete          Delete project <span class="k">if</span> already exists.
+  -f, --force           Force deletion of the project.
+  -r REPO, --repo REPO  Repository to clone.
+  -o, --open            Automatically run the open_project command.
+  --no-env              Do not create an environment.
+  --clone CLONE         Command to use <span class="k">for</span> cloning.
+</pre></div>
+</div>
+</div>
+<div class="section" id="load-env">
+<h3>load_env<a class="headerlink" href="#load-env" title="Permalink to this headline">¶</a></h3>
+<p>Loads a project environment.</p>
+<div class="highlight-bash"><div class="highlight"><pre>usage: pmpy load_env <span class="o">[</span>-h<span class="o">]</span> project
+
+positional arguments:
+  project     Name of the project
+
+optional arguments:
+  -h, --help  show this <span class="nb">help </span>message and <span class="nb">exit</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="open-project">
+<h3>open_project<a class="headerlink" href="#open-project" title="Permalink to this headline">¶</a></h3>
+<dl class="docutils">
+<dt>Opens a project activating the environment and opening using the</dt>
+<dd>configured editor.</dd>
+</dl>
+<div class="highlight-bash"><div class="highlight"><pre>usage: pmpy open_project <span class="o">[</span>-h<span class="o">]</span> project
+
+positional arguments:
+  project     Name of the project
+
+optional arguments:
+  -h, --help  show this <span class="nb">help </span>message and <span class="nb">exit</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="show-config">
+<h3>show_config<a class="headerlink" href="#show-config" title="Permalink to this headline">¶</a></h3>
+<dl class="docutils">
+<dt>Dumps the configuration. If given a project it will dump that projects</dt>
+<dd>configuration.</dd>
+</dl>
+<div class="highlight-bash"><div class="highlight"><pre>usage: pmpy show_config <span class="o">[</span>-h<span class="o">]</span> <span class="o">[</span>project<span class="o">]</span> <span class="o">[</span>section<span class="o">]</span>
+
+positional arguments:
+  project     Optional name of project to show.
+  section     Optional section to show.
+
+optional arguments:
+  -h, --help  show this <span class="nb">help </span>message and <span class="nb">exit</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="#">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Welcome to pmpy!</a><ul>
+<li><a class="reference internal" href="#available-commands">Available commands</a><ul>
+<li><a class="reference internal" href="#build-docs">build_docs</a></li>
+<li><a class="reference internal" href="#create-config">create_config</a></li>
+<li><a class="reference internal" href="#create-env">create_env</a></li>
+<li><a class="reference internal" href="#create-project">create_project</a></li>
+<li><a class="reference internal" href="#load-env">load_env</a></li>
+<li><a class="reference internal" href="#open-project">open_project</a></li>
+<li><a class="reference internal" href="#show-config">show_config</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/index.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2015, Nickolas Whiting.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.4</a>
+      
+      |
+      <a href="_sources/index.txt"
+          rel="nofollow">Page source</a></li>
+    </div>
+
+    
+
+    
+  </body>
+</html>

@@ -1,0 +1,8 @@
+{command}
+{command_underline}
+
+{docstring}
+
+.. code-block:: bash
+
+{help_text}
