@@ -10,6 +10,9 @@ from pmpy import PmPyCommand, PATH, command, DEFAULT_CONFIG, pmpy_format, \
 # Python
 from collections import defaultdict
 import re
+import json
+import csv
+import sys
 
 class GitPep8Compliance(PmPyCommand):
     """Generates a report on the given project for PEP8 compliance.
@@ -23,8 +26,15 @@ class GitPep8Compliance(PmPyCommand):
                 'help': 'Name of the project',
             }],
             [['--pep8-options'], {
-                'help': 'pep8 options.',
-                'default': DEFAULT_CONFIG.get('pmpy', 'clone')
+                'help': 'pep8 options.'
+            }],
+            [['--blame-options'], {
+                'help': 'git blame options.'
+            }],
+            [['--output'], {
+                'help': 'Output format.',
+                'default': 'csv',
+                'choices': ['csv', 'json']
             }],
         ]
 
@@ -39,16 +49,18 @@ class GitPep8Compliance(PmPyCommand):
         blame = None
         current_file = None
         authors = {}
-        git_blame_regex = re.compile(ur"([\^\w\d]{8})(.*)\(([\w\s]+?)[\s]+([0-9\-\s:\+]+)\s{1}([0-9]+)\)(.*)")
+        git_blame_regex = re.compile(ur"([\^\w\d]{8})(.*)\(([\w\s]+?|\<.*\>)[\s]+([0-9\-\s:\+]+)\s{1}([0-9]+)\)(.*)")
         for line in pep8.split("\n"):
+            if line == '.':
+                continue
             try:
                 _file, _error, _desc = line.split(" ", 2)
             except Exception, e:
                 print "Error checking line {0}. Error {1}".format(line, e)
                 continue
             _file, _line, _column, _blank = _file.split(':', 3)
-            blame_command = 'cd {path}/{project} && git blame {file} -L {line},{line}'.format(
-                path=PATH, project=args.project, file=_file, line=_line)
+            blame_command = 'cd {path}/{project} && git blame {file} -L {line},{line} {blame_options}'.format(
+                path=PATH, project=args.project, file=_file, line=_line, blame_options=args.blame_options)
             blame = command(blame_command, capture_output=True)
             blame_data = git_blame_regex.search(blame)
             if blame_data is None:
@@ -74,7 +86,20 @@ class GitPep8Compliance(PmPyCommand):
             authors[_author]['files'][_file].append({
                 'line': _line,
                 'column': _column,
-                'error': _desc
+                'error': _desc,
+                'errorno': _error
             })
-        import pprint
-        pprint.pprint(authors)
+        if args.output == 'json':
+            print json.dumps(authors)
+        if args.output == 'csv':
+            writer = csv.writer(sys.stdout)
+            writer.writerow(['Author', 'Errors', 'Files'])
+            for author, error_data in authors.iteritems():
+                file_errors = []
+                for _f, _f_data in error_data['files'].iteritems():
+                    errors = _f.replace(' {path}/{project}'.format(path=PATH, project=args.project), 
+                                        '')
+                    errors += "\n".join(["\tLine : {0} Error : {1}".format(x['line'], x['error']) \
+                                         for x in _f_data])
+                    file_errors.append(errors)
+                writer.writerow([author, error_data['error_count'], "\n".join(file_errors)])

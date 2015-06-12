@@ -110,6 +110,29 @@ optional arguments:
 </pre></div>
 </div>
 </div>
+<div class="section" id="git-pep8-compliance">
+<h3>git_pep8_compliance<a class="headerlink" href="#git-pep8-compliance" title="Permalink to this headline">¶</a></h3>
+<p>Generates a report on the given project for PEP8 compliance.</p>
+<blockquote>
+<div>Uses <cite>git blame</cite> for determining who committed the violation.</div></blockquote>
+<div class="highlight-bash"><div class="highlight"><pre>usage: pmpy git_pep8_compliance <span class="o">[</span>-h<span class="o">]</span> <span class="o">[</span>--pep8-options PEP8_OPTIONS<span class="o">]</span>
+                                <span class="o">[</span>--blame-options BLAME_OPTIONS<span class="o">]</span>
+                                <span class="o">[</span>--output <span class="o">{</span>csv,json<span class="o">}]</span>
+                                project
+
+positional arguments:
+  project               Name of the project
+
+optional arguments:
+  -h, --help            show this <span class="nb">help </span>message and <span class="nb">exit</span>
+  --pep8-options PEP8_OPTIONS
+                        pep8 options.
+  --blame-options BLAME_OPTIONS
+                        git blame options.
+  --output <span class="o">{</span>csv,json<span class="o">}</span>   Output format.
+</pre></div>
+</div>
+</div>
 <div class="section" id="load-env">
 <h3>load_env<a class="headerlink" href="#load-env" title="Permalink to this headline">¶</a></h3>
 <p>Loads a project environment.</p>
@@ -173,6 +196,7 @@ optional arguments:
 <li><a class="reference internal" href="#create-config">create_config</a></li>
 <li><a class="reference internal" href="#create-env">create_env</a></li>
 <li><a class="reference internal" href="#create-project">create_project</a></li>
+<li><a class="reference internal" href="#git-pep8-compliance">git_pep8_compliance</a></li>
 <li><a class="reference internal" href="#load-env">load_env</a></li>
 <li><a class="reference internal" href="#open-project">open_project</a></li>
 <li><a class="reference internal" href="#show-config">show_config</a></li>
