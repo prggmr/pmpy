@@ -36,4 +36,5 @@ class CreateConfig(PmPyCommand):
             input = raw_input('{0} [{1}]: '.format(option[0], option[1]))
             if input is not None:
                 config.set('pmpy', option[0], input)
-        config.write(open('{0}/.pmpy'.format(self.get_project_path(args.project), 'w+')))
+        with open('{0}/.pmpy'.format(self.get_project_path(args.project), 'w')) as f:
+            config.write(f)
