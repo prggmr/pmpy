@@ -5,7 +5,7 @@
 # @author  Nickolas Whiting  <prggmr@gmail.com>
 
 from pmpy import PmPyCommand, PATH, command, DEFAULT_CONFIG, pmpy_format, \
-    call_command
+    call_command, has_help
 
 # Python
 from collections import defaultdict
@@ -17,7 +17,7 @@ import sys
 class GitPep8Compliance(PmPyCommand):
     """Generates a report on the given project for PEP8 compliance.
 
-    Uses `git blame` for determining who committed the violation.
+Uses `git blame` for determining who committed the violation.
     """
     
     def get_args(self):
@@ -43,13 +43,14 @@ class GitPep8Compliance(PmPyCommand):
         pep8 = command('pep8 {path}/{project} {pep8_options}'.format( 
                 path=PATH, project=args.project, pep8_options=args.pep8_options), 
                     capture_output=True)
-        if '-h' in args.pep8_options or '--help' in args.pep8_options:
+        if has_help(args.pep8_options):
             print pep8
-            return
+            return True
         blame = None
         current_file = None
         authors = {}
-        git_blame_regex = re.compile(ur"([\^\w\d]{8})(.*)\(([\w\s]+?|\<.*\>)[\s]+([0-9\-\s:\+]+)\s{1}([0-9]+)\)(.*)")
+        regex = ur"([\^\w\d]{8})(.*)\(([\w\s]+?|\<.*\>)[\s]+([0-9\-\s:\+]+)\s{1}([0-9]+)\)(.*)"
+        git_blame_regex = re.compile(regex)
         for line in pep8.split("\n"):
             if line == '.':
                 continue
@@ -59,9 +60,14 @@ class GitPep8Compliance(PmPyCommand):
                 print "Error checking line {0}. Error {1}".format(line, e)
                 continue
             _file, _line, _column, _blank = _file.split(':', 3)
-            blame_command = 'cd {path}/{project} && git blame {file} -L {line},{line} {blame_options}'.format(
-                path=PATH, project=args.project, file=_file, line=_line, blame_options=args.blame_options)
+            blame_command = \
+                'cd {path}/{project} && git blame {file} -L {line},{line} {blame_options}'.format(
+                    path=PATH, project=args.project, file=_file, line=_line, 
+                    blame_options=args.blame_options)
             blame = command(blame_command, capture_output=True)
+            if has_help(args.blame_options):
+                print blame
+                return True
             blame_data = git_blame_regex.search(blame)
             if blame_data is None:
                 if 'fatal: no such path' in blame:

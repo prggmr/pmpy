@@ -15,25 +15,13 @@
 # Only for teh Mac users
 [ `uname -s` != "Darwin" ] && return
 
-cmd=""
-cdto="$PWD"
-args="$@"
-
-if [ -d "$1" ]; then
-    cdto=`cd "$1"; pwd`
-    args="${@:2}"
-fi
-
-if [ -n "$args" ]; then
-    cmd="; $args"
-fi
-
 osascript &>/dev/null <<EOF
     tell application "iTerm"
         tell current terminal
             launch session "Default Session"
             tell the last session
-                write text "cd \"$cdto\"$cmd"
+                write contents of file "$1"
+                return
             end tell
         end tell
     end tell

@@ -3,7 +3,7 @@ ___________________
 
 Generates a report on the given project for PEP8 compliance.
 
-    Uses `git blame` for determining who committed the violation.
+Uses `git blame` for determining who committed the violation.
     
 
 .. code-block:: bash

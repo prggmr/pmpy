@@ -17,10 +17,22 @@ class OpenProject(PmPyCommand):
             [['project'], {
                 'help': 'Name of the project',
             }],
+            [['--no-editor'], {
+                'help': 'Do not open the project in the editor',
+                'action': 'store_true',
+                'default': False
+            }],
+            [['--no-load'], {
+                'help': 'Do not load the project environment',
+                'action': 'store_true',
+                'default': False
+            }]
         ]
 
     def __call__(self, args):
         config = self.get_project_config(args.project)
-        call_command('load_env', args=args)
-        command(pmpy_format(config.get('pmpy', 'editor'), 
-                path=PATH, project=args.project))
+        if not args.no_load:
+            call_command('load_env', args=args)
+        if not args.no_editor:
+            command(pmpy_format(config.get('pmpy', 'editor'), 
+                    path=PATH, project=args.project))

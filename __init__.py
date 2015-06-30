@@ -58,10 +58,10 @@ def pmpy_format(x, default_kwargs = DEFAULT_KWARGS, *args, **kwargs):
     """
     return x.format(**dict(DEFAULT_KWARGS.items() + kwargs.items()))
 
-def call_command(command, args):
+def call_command(x, args):
     """Calls a pmpy command.
     """
-    _class = load_command(command)
+    _class = load_command(x)
     return _class(args)
 
 def load_command(command_str):
@@ -70,6 +70,16 @@ def load_command(command_str):
     _class = getattr(import_module('commands.{0}'.format(command_str)), 
                      underscore_to_camel(command_str))()
     return _class
+
+def has_help(x):
+    """Determines if the given string has a help request. It checks for the 
+    presence of either "-h" or "--help".
+    """
+    if x is None:
+        return False
+    if '-h' in x or '--help' in x:
+        return True
+    return False
 
 class PmPyCommand(object):
     """Runs a command.

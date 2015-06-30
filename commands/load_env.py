@@ -4,6 +4,11 @@
 #
 # @author  Nickolas Whiting  <prggmr@gmail.com>
 
+# Python
+import time
+import os
+
+# pmpy
 from pmpy import PmPyCommand, PATH, command, DEFAULT_CONFIG, pmpy_format
 
 class LoadEnv(PmPyCommand):
@@ -25,5 +30,17 @@ class LoadEnv(PmPyCommand):
         env_path = '{0}/{1}'.format(full_path,
             pmpy_format(config.get('pmpy', 'env_activate_path'), 
                         env_path=config.get('pmpy', 'env_path')))
-        command(pmpy_format(config.get('pmpy', 'source'), 
-                path=PATH, env=env_path, project=args.project))
+        kwargs = {
+            'path':PATH, 
+            'env':env_path, 
+            'project':args.project
+        }
+        tmp_file = "/tmp/pmpy_load_env_{0}".format(str(int(time.time())))
+        source = pmpy_format(config.get('pmpy', 'source'), **kwargs)
+        source_command = pmpy_format(config.get('pmpy', 'source_command'), **kwargs)
+        tmp_file_object = open(tmp_file, 'w+')
+        tmp_file_object.write(source)
+        tmp_file_object.close()
+        command('chmod +x {0}'.format(tmp_file))
+        command("{0} {1}".format(source_command, tmp_file))
+        os.remove(tmp_file)
